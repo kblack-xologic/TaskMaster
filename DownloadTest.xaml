@@ -1,0 +1,124 @@
+﻿<Page x:Class="TaskMaster.DownloadTest"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TaskMaster"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="DownloadTest">
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush Opacity=".5" ImageSource="TaskMaster_Background2.jpg"/>
+        </Grid.Background>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="1.3*"/>
+            <RowDefinition Height="1.5*"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="Select a file to download from:" Margin="10,10,0,0" VerticalContentAlignment="Center"/>
+        <Button Content="Select File" HorizontalAlignment="Left" Margin="280,10,0,0" VerticalAlignment="Center" Width="100" Click="Select_File" Height="25">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
+        <TextBox Grid.Row="1" Name="csvFile" Margin="10,5,10,0" VerticalContentAlignment="Center" Height="25"/>
+
+        <Button Grid.Row="0" Name="HelpButton" Content="Help" Click="Help_Box" Margin="0,0,10,0" Background="LightBlue" Foreground="Black" FontWeight="ExtraBold" 
+                VerticalAlignment="Center" HorizontalAlignment="Right" Width="50" Height="25">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
+        <Popup Name="PopupHelp" Placement="Mouse" VerticalOffset="-50" AllowsTransparency="False" MaxWidth="700">
+            <Border BorderBrush="Black" BorderThickness="2">
+                <Grid Background="White">
+                    <StackPanel>
+                        <Button Name="HidePopUpButton" Content="Close Help" Click="Hide_Help" Width="80" Height="25" HorizontalAlignment="Left" Margin="10,10,10,10"/>
+                        <TextBlock TextWrapping="Wrap" Margin="10,10,10,10">
+                        <Run FontSize="13">The URL Downloader Tool will download a list of URLs from a csv and save them using a user supplied filename.</Run><LineBreak/><LineBreak/>
+                        <Run FontWeight="Bold" FontSize="14pt">Preparation:</Run><LineBreak/>
+                        <Run FontWeight="Bold">Step 1: </Run> Create a csv with Column 1 containing URL's to download and Column 2 containing the desired 
+                        filenames and extensions (Ex: itemnumber.jpg). Do not include any headers.<LineBreak/>
+                        <Run FontWeight="Bold">Step 2: </Run> Create/Determine a folder/directory to download the files to.<LineBreak/><LineBreak/>
+                        <Run FontWeight="Bold" FontSize="14pt">In the Tool:</Run><LineBreak/>
+                        <Run FontWeight="Bold">Step 3: </Run> Click "Select File" and browse to the csv file set up in step 1. Once selected, the number 
+                        of URL's in your csv file's 1st column will show at the bottom of the page.<LineBreak/>
+                        <Run FontWeight="Bold">Step 4: </Run> Click "Select Directory" and browse to the folder/directory from step 2.<LineBreak/>
+                        <Run FontWeight="Bold">Step 5: </Run> Click "Start Downloading" - This option will not be available until steps 3 &amp; 4 are completed.<LineBreak/><LineBreak/>
+                        <Run FontWeight="Bold" FontSize="14pt">Viewing Progress:</Run><LineBreak/>
+                        While the files are downloading, you can see the progress in the lower left corner, under the submit button. Do not close the program 
+                        while downloading. If you close the program during the downloading process, you will either need to restart the file in this tool or 
+                        manually filter out the previously downloaded files. You may navigate to other parts of this tool, but do not close the window.<LineBreak/><LineBreak/>
+                        <Run FontWeight="Bold" FontSize="14pt">After Completion:</Run><LineBreak/>
+                        Once the files have finished downloading, you can review a summary of the downloads under the Submit button. If any files did not
+                        download successfully, an option to "Export Errors" will appear. Clicking this button will allow you to download a csv that will
+                        contain the URLs and filenames that did not successfully download.<LineBreak/><LineBreak/>
+                        <Run FontWeight="Bold" FontSize="14pt">Why didn't this work?</Run><LineBreak/>
+                        Errors may occur for many reasons including:<LineBreak/>
+                        1) The URL was invalid - URL's without "http://" or "https://" at the beginning will have "http://" appended to it.<LineBreak/>
+                        2) There was no filename supplied, or an invalid name for a file was given.<LineBreak/>
+                        3) The URL did not lead to a downloadable link.<LineBreak/>
+                        4) The file requires credentials or a certificate. <LineBreak/>
+                        5) Files marked as successful may not have saved correctly because it was saved as an incorrect file type. For example, a '.eps' file cannot be saved as a '.jpg'.<LineBreak/>
+                        6) Sometimes tools just don't work the way they are supposed to. Contact Kevin Black if you have an issue that needs to be resolved.
+                        </TextBlock>
+                    </StackPanel>
+
+                </Grid>
+            </Border>
+        </Popup>
+
+        <!--<StackPanel Grid.Row="2" VerticalAlignment="Center" Margin="10,0,0,0">
+            <RadioButton Name="Rename" Content="Name the downloaded files based on the Item Number" Margin="0,5,0,5" IsChecked="True" Checked="RadioButton_Checked"/>
+            <RadioButton Name="KeepName" Content ="Keep the original file name (referencing files to items might be hard)" Margin="0,5,0,5" Checked="RadioButton_Checked"/>
+        </StackPanel>-->
+
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" Height="60" Width="780">
+            <Run FontWeight="Bold"> The file selected above must contain two columns:</Run><LineBreak/>
+            Column 1: Valid URL<LineBreak/>
+            Column 2: File Name &amp; Extension to save URL from Column 1
+        </TextBlock>
+
+        <Label Grid.Row="4" Content="Select the directory to download files to:" Margin="10,10,0,0" VerticalContentAlignment="Center"/>
+        <Button Grid.Row="4" Content="Select Directory" HorizontalAlignment="Left" Margin="280,10,0,0" VerticalAlignment="Center" Width="100" Click="Select_Dir" Height="25">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
+        <TextBox Grid.Row="5" Name="dirDownload" Margin="10,5,10,0" VerticalContentAlignment="Center" Height="25"/>
+
+        <Button Grid.Row="7" Name="SubmitButton" Content="Start Downloading" HorizontalAlignment="Left" Margin="10,5,10,0" VerticalAlignment="Center" Click="Start_Downloads" Width="150" Height="30" FontWeight="Bold" FontSize="16" >
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+            <Button.Resources>
+                <local:HasAllTextConverter x:Key="HasAllTextConverter" />
+            </Button.Resources>
+            <Button.IsEnabled>
+                <MultiBinding Converter="{StaticResource HasAllTextConverter}">
+                    <Binding ElementName="csvFile" Path="Text" />
+                    <Binding ElementName="dirDownload" Path="Text" />
+                </MultiBinding>
+            </Button.IsEnabled>
+        </Button>
+
+        <TextBlock Name="Status" FontWeight="Bold" FontSize="13pt" HorizontalAlignment="Left" Margin="175,10,0,0" Grid.Row="7" TextWrapping="Wrap" VerticalAlignment="Center"/>
+        
+        <TextBlock Grid.Row ="8" Name="DownloadStatus" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Background="Yellow"/>
+        <Button Grid.Row="8" Name="ExportErrors" Content="Export Errors" HorizontalAlignment="Left" Margin="400,10,0,0" VerticalAlignment="Center" Width="100" Click="Save_Errors" Height="25" Visibility="Hidden">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
+    </Grid>
+</Page>

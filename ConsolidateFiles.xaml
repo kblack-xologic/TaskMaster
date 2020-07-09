@@ -1,0 +1,111 @@
+﻿<Page x:Class="TaskMaster.ConsolidateFiles"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TaskMaster"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ConsolidateFiles">
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush Opacity=".5" ImageSource="TaskMaster_Background2.jpg"/>
+        </Grid.Background>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="0.7*"/>
+            <RowDefinition Height="1.3*"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBlock Margin="10,10,0,0" MaxWidth="200" HorizontalAlignment="Left" >Select the parent directory<LineBreak/>to begin consolidating files:</TextBlock>
+        <Button Content="Select Parent Directory" HorizontalAlignment="Left" Margin="280,10,0,0" VerticalAlignment="Center" Width="150" Click="Select_Parent_Dir" Height="25">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
+        <TextBox Grid.Row="1" Name="parentDir" Margin="10,5,10,0" VerticalContentAlignment="Center" Height="25"/>
+
+        <Button Grid.Row="0" Name="HelpButton" Content="Help" Click="Help_Box" Margin="0,0,10,0" Background="LightBlue" Foreground="Black" FontWeight="ExtraBold" 
+                VerticalAlignment="Center" HorizontalAlignment="Right" Width="50" Height="25">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
+        <Popup Name="PopupHelp" Placement="Mouse" VerticalOffset="-50" AllowsTransparency="False" MaxWidth="700">
+            <Border BorderBrush="Black" BorderThickness="2">
+                <Grid Background="White">
+                    <StackPanel>
+                        <Button Name="HidePopUpButton" Content="Close Help" Click="Hide_Help" Width="80" Height="25" HorizontalAlignment="Left" Margin="10,10,10,10"/>
+                        <TextBlock TextWrapping="Wrap" Margin="10,10,10,10">
+                        <Run FontSize="13">The File Consolidation Tool will copy or move all files from a given parent directory and its subdirectories, to another directory. 
+                            The option to move or just copy the file to the new location is available.</Run><LineBreak/><LineBreak/>                        
+                        <Run FontWeight="Bold" FontSize="14pt">Preparation:</Run><LineBreak/>
+                        <Run FontWeight="Bold">Step 1: </Run> Create/Determine a folder/directory to consolidate the files to.<LineBreak/><LineBreak/>
+                        <Run FontWeight="Bold" FontSize="14pt">In the Tool:</Run><LineBreak/>
+                        <Run FontWeight="Bold">Step 2: </Run> Click "Select Parent Directory" and browse to the top level directory where you want to start consolidating files. 
+                            Everything in this directory and in its subdirectories will be consolidated.<LineBreak/>
+                        <Run FontWeight="Bold">Step 3: </Run> Click "Select Final Directory" and browse to the folder/directory from step 1. All files in the directory from 
+                            step 2 and and its subdirectories will be added to this directory.<LineBreak/>
+                        <Run FontWeight="Bold">Step 4: </Run> Select the option to either "Copy files to new location" or "Move files to new location". Any files that are 
+                            "Moved" will be deleted from the original location.<LineBreak/>
+                        <Run FontWeight="Bold">Step 5: </Run> Click "Start Consolidating" - This option will not be available until steps 2 &amp; 3 are completed.<LineBreak/><LineBreak/>
+                        <Run FontWeight="Bold" FontSize="14pt">Viewing Progress:</Run><LineBreak/>
+                        While the files are consolidating, a notification saying "In Progress... Do not exit the program" will appear to the right of the "Start Consolidating" 
+                            button. The consolidation process will be faster for "Moving" files, but should happen rather quickly. Do not exit the program while this is running.<LineBreak/><LineBreak/>
+                        <Run FontWeight="Bold" FontSize="14pt">After Completion:</Run><LineBreak/>
+                        Once the files have finished consolidating, the "In Progress..." message will change to "Finished!!!". A report of the number of files "copied" or "moved" will appear 
+                            under the "Start Consolidating" button. It is now safe to exit the program.<LineBreak/><LineBreak/>
+                        <Run FontWeight="Bold" FontSize="14pt">Why didn't this work?</Run><LineBreak/>
+                        Errors may occur for many reasons including:<LineBreak/>
+                        1) The directories are not accessible - this may be because the directories/paths were changed after selecting them in the tool.<LineBreak/>
+                        2) Files that have the same name that are in different subdirectories will not be copied or moved to the consolidated file.<LineBreak/>
+                        3) Sometimes tools just don't work the way they are supposed to. Contact Kevin Black if you have an issue that needs to be resolved.
+                        </TextBlock>
+                    </StackPanel>
+
+                </Grid>
+            </Border>
+        </Popup>
+
+        <TextBlock Grid.Row ="3" Margin="10,10,0,0" MaxWidth="200" HorizontalAlignment="Left" >Select the directory to<LineBreak/>consolidate files to:</TextBlock>
+        <Button Grid.Row="3" Content="Select Final Directory" HorizontalAlignment="Left" Margin="280,10,0,0" VerticalAlignment="Center" Width="150" Click="Select_Final_Dir" Height="25">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
+        <TextBox Grid.Row="4" Name="finalDir" Margin="10,5,10,0" VerticalContentAlignment="Center" Height="25"/>
+
+        <StackPanel Grid.Row="5" VerticalAlignment="Center" Margin="10,0,0,0">
+            <RadioButton Name="Copy" Content="Copy files to new location" Margin="0,5,0,5" IsChecked="True" Checked="RadioButton_Checked"/>
+            <RadioButton Name="Move" Content ="Move files to new location" Margin="0,5,0,5" Checked="RadioButton_Checked"/>
+        </StackPanel>
+
+
+        <Button Grid.Row="7" Name="SubmitButton" Content="Start Consolidating" HorizontalAlignment="Left" Margin="10,5,10,0" VerticalAlignment="Center" Click="Start_Consolidating" Width="150" Height="30" FontWeight="Bold" FontSize="16">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+            <Button.Resources>
+                <local:HasAllTextConverter x:Key="HasAllTextConverter" />
+            </Button.Resources>
+            <Button.IsEnabled>
+                <MultiBinding Converter="{StaticResource HasAllTextConverter}">
+                    <Binding ElementName="parentDir" Path="Text" />
+                    <Binding ElementName="finalDir" Path="Text" />
+                </MultiBinding>
+            </Button.IsEnabled>
+        </Button>
+        <TextBlock Grid.Row="7" Name="consolidateStatus" FontWeight="Bold" FontSize="13pt" HorizontalAlignment="Left" Margin="175,10,0,0" TextWrapping="Wrap" VerticalAlignment="Center"/>
+
+        <TextBlock Grid.Row ="8" Name="consolidateReport" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Background="Yellow"/>
+
+    </Grid>
+</Page>
